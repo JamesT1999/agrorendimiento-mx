@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroRendimiento MX</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='styles.css') }}"
+    >
+</head>
+
+<body>
+    <main class="app-container">
+        <section class="hero">
+            <div class="hero-content">
+                <span class="badge">Machine Learning aplicado a la agricultura</span>
+
+                <h1>AgroRendimiento MX</h1>
+
+                <p>
+                    Estima el rendimiento agrícola con base en datos históricos
+                    de producción en México.
+                </p>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <div class="section-heading">
+                <p class="eyebrow">Nueva estimación</p>
+                <h2>Ingresa los datos del cultivo</h2>
+                <p>
+                    Completa todos los campos para generar una predicción.
+                </p>
+            </div>
+
+            {% if error %}
+                <div class="alert alert-error">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST" class="prediction-form">
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="Anio">Año</label>
+                        <input
+                            type="number"
+                            id="Anio"
+                            name="Anio"
+                            min="1900"
+                            max="2100"
+                            value="{{ form_data.get('Anio', '') }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomestado">Estado</label>
+                        <select id="Nomestado" name="Nomestado" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomestado"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomestado") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomddr">Distrito de Desarrollo Rural</label>
+                        <select id="Nomddr" name="Nomddr" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomddr"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomddr") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomcader">CADER</label>
+                        <select id="Nomcader" name="Nomcader" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomcader"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomcader") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nommunicipio">Municipio</label>
+                        <select id="Nommunicipio" name="Nommunicipio" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nommunicipio"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nommunicipio") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomcicloproductivo">Ciclo productivo</label>
+                        <select
+                            id="Nomcicloproductivo"
+                            name="Nomcicloproductivo"
+                            required
+                        >
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomcicloproductivo"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomcicloproductivo") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nommodalidad">Modalidad</label>
+                        <select id="Nommodalidad" name="Nommodalidad" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nommodalidad"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nommodalidad") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomunidad">Unidad de medida</label>
+                        <select id="Nomunidad" name="Nomunidad" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomunidad"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomunidad") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Nomcultivo">Cultivo</label>
+                        <select id="Nomcultivo" name="Nomcultivo" required>
+                            <option value="">Selecciona una opción</option>
+                            {% for option in categories["Nomcultivo"] %}
+                                <option
+                                    value="{{ option }}"
+                                    {% if form_data.get("Nomcultivo") == option %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    {{ option }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Sembrada">Superficie sembrada</label>
+                        <input
+                            type="number"
+                            id="Sembrada"
+                            name="Sembrada"
+                            min="0.01"
+                            step="0.01"
+                            value="{{ form_data.get('Sembrada', '') }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Siniestrada">Superficie siniestrada</label>
+                        <input
+                            type="number"
+                            id="Siniestrada"
+                            name="Siniestrada"
+                            min="0"
+                            step="0.01"
+                            value="{{ form_data.get('Siniestrada', '') }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Preciomediorural">Precio medio rural</label>
+                        <input
+                            type="number"
+                            id="Preciomediorural"
+                            name="Preciomediorural"
+                            min="0"
+                            step="0.01"
+                            value="{{ form_data.get('Preciomediorural', '') }}"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <button type="submit" class="primary-button">
+                    Generar predicción
+                </button>
+            </form>
+        </section>
+
+        {% if prediction is not none %}
+<section class="result-card">
+
+    <div class="result-icon">
+        🌾
+    </div>
+
+    <p class="eyebrow">
+        Predicción completada
+    </p>
+
+    <h2>
+        {{ "%.2f"|format(prediction) }}
+    </h2>
+
+    <p class="result-unit">
+        toneladas por hectárea
+    </p>
+
+    <div class="result-details">
+        <span>Modelo utilizado</span>
+        <strong>XGBoost</strong>
+    </div>
+
+    <small>
+        Esta estimación fue generada mediante un modelo de Machine Learning
+        entrenado con datos históricos de producción agrícola en México.
+        Debe interpretarse como una herramienta de apoyo para la toma de
+        decisiones y no como una medición exacta en campo.
+    </small>
+
+</section>
+{% endif %}
+</body>
+</html>
