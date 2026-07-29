@@ -110,3 +110,11 @@ Para procesar datos, puedes modificar el script app.py para incluir tus pasos de
 Esta plantilla fue construida como parte del [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) de 4Geeks Academy por [Alejandro Sanchez](https://twitter.com/alesanchezr) y muchos otros contribuyentes. Descubre más sobre [los programas BootCamp de 4Geeks Academy](https://4geeksacademy.com/us/programs) aquí.
 
 Otras plantillas y recursos como este se pueden encontrar en la página de GitHub de la escuela.
+
+## 🌐 Aplicación web
+
+La aplicación se encuentra desplegada en Render y está disponible en el siguiente enlace:
+
+👉 https://agrorendimiento-mx.onrender.com
+
+Con esta aplicación es posible estimar el rendimiento agrícola de un cultivo utilizando un modelo de Machine Learning entrenado con datos históricos de producción agrícola en México.
